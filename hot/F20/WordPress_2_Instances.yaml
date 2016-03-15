@@ -16,20 +16,25 @@ parameters:
 
   instance_type:
     type: string
-    description: Instance type for web and DB servers
+    description: Flavor for the instances to be created
     default: m1.small
     constraints:
-      - allowed_values: [m1.tiny, m1.small, m1.medium, m1.large, m1.xlarge]
-        description: instance_type must be a valid instance type
+      - custom_constraint: nova.flavor
+        description: Must be a flavor known to Nova
 
   image_id:
     type: string
     description: >
-      Name or ID of the image to use for the WordPress server.
-      Recommended values are fedora-20.i386 or fedora-20.x86_64;
-      get them from http://cloud.fedoraproject.org/fedora-20.i386.qcow2
-      or http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2 .
-    default: fedora-20.x86_64
+      Name or ID of the image to use for the instances.
+      You can get the default from
+      http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2
+      There is also
+      http://cloud.fedoraproject.org/fedora-20.i386.qcow2
+      Any image should work since this template
+      does not ask the VMs to do anything.
+    constraints:
+      - custom_constraint: glance.image
+        description: Must identify an image known to Glance
 
   db_name:
     type: string
