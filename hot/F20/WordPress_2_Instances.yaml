@@ -11,8 +11,10 @@ parameters:
 
   key_name:
     type: string
-    description : Name of a KeyPair to enable SSH access to the instance
-    default: test_key
+    description: Name of an existing key pair to use for the instances
+    constraints:
+      - custom_constraint: nova.keypair
+        description: Must name a public key (pair) known to Nova
 
   instance_type:
     type: string
